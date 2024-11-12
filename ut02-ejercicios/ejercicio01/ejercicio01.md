@@ -6,5 +6,4 @@ Una empresa vende productos a varios clientes. Se necesita conocer los datos per
 Los productos son suministrados por diferentes proveedores. 
 Se debe tener en cuenta que un producto solo puede ser suministrado por un proveedor, y que un proveedor puede suministrar diferentes productos. De cada proveedor se desea conocer el NIF, nombre y dirección.
 
-![diagrama ejercicio01](Ejercicio01.png)
-Falta participación
+![diagrama ejercicio01](ejercicio01.png)
