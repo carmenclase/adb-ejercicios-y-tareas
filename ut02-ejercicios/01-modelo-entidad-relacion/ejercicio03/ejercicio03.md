@@ -7,3 +7,5 @@ Se desea diseñar una BD de una entidad bancaria que contenga información sobre
 - Un cliente puede tener muchas cuentas.
 - Una cuenta puede ser de muchos clientes.
 - Una cuenta sólo puede estar en una sucursal.
+
+![Diagrama ejercicio 3](ejercicio03.png)

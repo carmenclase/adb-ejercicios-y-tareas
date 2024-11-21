@@ -13,7 +13,7 @@ Normaliza la tabla Pedidos para que cumpla con 1FN, 2FN y 3FN. Identifica las de
 
 ## Resolución
 
-Tabla clientes 
+Tabla `clientes` 
 
 | ClienteID | ClienteNombre |
 | --- | --- |
@@ -21,7 +21,7 @@ Tabla clientes
 | 502 | "María"|
 | 503 | "Luis" |
 
-Tabla pedidos
+Tabla `pedidos`
 
 | PedidoID | FechaPedido | ClienteID |
 | --- | --- | --- |
@@ -31,7 +31,7 @@ Tabla pedidos
 | 303 | 07/04/2023 | 503 | 
 | 303 | 07/04/2023 | 503 | 
 
-Tabla detalles pedidos
+Tabla `detalles pedidos`
 
 | PedidoID | ProductoID | Cantidad |
 | --- | --- | --- |
@@ -41,7 +41,7 @@ Tabla detalles pedidos
 | 303 | 1001 | 12 |
 | 303 | 1004 | 4 |
 
-Tabla productos
+Tabla `productos`
 
 | ProductoID | ProductoNombre | PrecioUnitario |
 | --- | --- | --- |
@@ -49,4 +49,3 @@ Tabla productos
 | 1002 | Cuaderno | 1.5 |
 | 1003 | Bolígrafo | 0.8 |
 | 1004 | Borrador | 0.3 |
-
