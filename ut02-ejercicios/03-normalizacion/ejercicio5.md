@@ -15,13 +15,10 @@ Normaliza la tabla CursosEstudiantes para que cumpla con 1FN, 2FN y 3FN. Identif
 
 Tabla `profesores`
 
-| Profesor | Departamento | Curso | 
-| --- | --- | --- |
-| "Dr. Pérez" | Ciencias | "Matemáticas" |
-| "Dr. Pérez" | Ciencias | "Física" |
-| "Dr. Pérez" | Ciencias | "Química" |
-| "Dr. Gómez" | Humanidades | "Historia" |
-| "Dr. Pérez" | Humanidades | "Literatura" |
+| Profesor | Departamento | 
+| -------- | ------------ |
+| "Dr. Pérez" | Ciencias |
+| "Dr. Pérez" | Humanidades |
 
 Tabla `alumnos`
 
@@ -34,31 +31,22 @@ Tabla `alumnos`
 
 Tabla `cursos`
 
-| RegistroID | Curso |
-| ---------- | ----- |
-| 1 | Matemáticas |
-| 1 | Física |
-| 2 | Matemáticas |
-| 2 | Química |
-| 3 | Historia |
-| 3 | Literatura |
-| 4 | Química |
+| Curso | Profesor |
+| ----- | -------- |
+| Matemáticas | "Dr. Pérez" |
+| Física | "Dr. Pérez" |
+| Química | "Dr. Pérez" |
+| Historia | "Dr. Gómez" |
+| Literatura |  "Dr. Gómez" |s
 
-Tabla `notas`
+Tabla `cursos-alumnos`
 
-| EstudianteID | Notas | 
-| ------------ | ----- | 
-| 201 | 85 |
-| 201 | 90 |
-| 202 | 78 |
-| 202 | 88 |
-| 203 | 92 |
-| 203 | 80 |
-| 204 | 75 |
-
-
-
-
-registro -> 
-
-id estudiante ->
+| EstudianteID | Notas | Curso |
+| ------------ | ----- | ----- |
+| 201 | 85 | Matemáticas |
+| 201 | 90 | Física |
+| 202 | 78 | Matemáticas |
+| 202 | 88 | Química |
+| 203 | 92 | Historia |
+| 203 | 80 | Literatura |
+| 204 | 75 | Química |
