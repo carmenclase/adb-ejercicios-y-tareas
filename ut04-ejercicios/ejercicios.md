@@ -104,3 +104,105 @@ Un autor puede escribir muchos libros, pero cada libro pertenece a un solo autor
 18. Consulta la estructura de la tabla libros.
 19. Elimina la tabla libros y bibliotecas.
 20. Elimina la base de datos biblioteca.
+
+
+## Ejercicio 4: Departamento y Empleados (1:N)
+
+Un departamento puede tener muchos empleados, pero un empleado pertenece a un solo departamento.
+
+1. Crea una base de datos llamada universidad con utf8mb4_unicode_ci.
+2. Modifica la base de datos universidad para cambiar su collation a utf8mb4_general_ci.
+3. Crea una tabla alumnos con los siguientes campos:
+* id: UNSIGNED INT, auto incremental, clave primaria.
+* nombre: VARCHAR(100), no nulo.
+4. Crea una tabla asignaturas con los siguientes campos:
+* id: AUTO_INCREMENT, clave primaria.
+* nombre: VARCHAR(100), no nulo.
+5. Crea la tabla intermedia matriculas para gestionar la relación muchos a muchos entre alumnos y asignaturas, con los campos:
+* id: AUTO_INCREMENT, clave primaria.
+* alumno_id: UNSIGNED INT, clave foránea a alumnos(id).
+* asignatura_id: UNSIGNED INT, clave foránea a asignaturas(id).
+* fecha_matricula: DATE, no nulo.
+6. Modifica la tabla matriculas para agregar una columna nota de tipo DECIMAL(4,2).
+7. Cambia el tamaño del campo nombre en la tabla asignaturas a 150 caracteres.
+8. Elimina la columna nota de la tabla matriculas.
+9. Añade un índice a la columna nombre en asignaturas para mejorar la búsqueda.
+10. Inserta un alumno llamado "Luis Gómez".
+11. Añade una asignatura llamada "Matemáticas".
+12. Matricula al alumno en Matemáticas con fecha de matrícula de hoy.
+13. Inserta dos alumnos adicionales ("María Fernández" y "Carlos Ruiz").
+14. Añade tres asignaturas adicionales ("Física", "Historia", "Química").
+15. Matricula a los alumnos en distintas asignaturas.
+16. Consulta todas las asignaturas en las que está inscrito el alumno "Luis Gómez".
+17. Consulta todos los alumnos que están inscritos en la asignatura "Matemáticas".
+18. Elimina la inscripción de un alumno en una asignatura específica.
+19. Elimina un alumno y sus matrículas asociadas.
+20. Elimina la base de datos universidad.
+
+## Ejercicio 5: Actores y Películas (Relación N:M)
+
+Un actor puede actuar en varias películas, y una película puede tener varios actores.
+
+1. Crea una base de datos llamada cine con utf8mb4_unicode_ci.
+2. Modifica la base de datos cine para cambiar su collation a utf8mb4_general_ci.
+3. Crea una tabla actores con los siguientes campos:
+* id: UNSIGNED INT, auto incremental, clave primaria.
+* nombre: VARCHAR(100), no nulo.
+4. Crea una tabla peliculas con los siguientes campos:
+* id: AUTO_INCREMENT, clave primaria.
+* titulo: VARCHAR(150), no nulo.
+* anio_estreno: YEAR, no nulo.
+5. Crea la tabla intermedia actores_peliculas para gestionar la relación muchos a muchos entre actores y peliculas, con los campos:
+* id: AUTO_INCREMENT, clave primaria.
+* actor_id: UNSIGNED INT, clave foránea a actores(id).
+* pelicula_id: UNSIGNED INT, clave foránea a peliculas(id).
+* personaje: VARCHAR(100), no nulo.
+6. Modifica la tabla actores_peliculas para agregar una columna salario de tipo DECIMAL(10,2).
+7. Cambia el tamaño del campo nombre en la tabla actores a 150 caracteres.
+8. Elimina la columna salario de la tabla actores_peliculas.
+9. Añade un índice a la columna titulo en peliculas para mejorar la búsqueda.
+10. Inserta un actor llamado "Leonardo DiCaprio".
+11. Añade una película llamada "Titanic" con año de estreno 1997.
+12. Registra la participación de "Leonardo DiCaprio" en "Titanic" como el personaje "Jack Dawson".
+13. Inserta dos actores adicionales ("Kate Winslet" y "Tom Hanks").
+14. Añade tres películas adicionales ("Forrest Gump", "Avatar", "Inception").
+15. Registra la participación de actores en distintas películas.
+16. Consulta todas las películas en las que ha trabajado "Leonardo DiCaprio".
+17. Consulta todos los actores que han participado en la película "Titanic".
+18. Elimina la participación de un actor en una película específica.
+19. Elimina un actor y sus registros de películas.
+20. Elimina la base de datos cine.
+
+## Ejercicio 6: Alumnos y Cursos (N:M)
+
+Un estudiante puede inscribirse en varios cursos, y un curso puede tener varios estudiantes.
+
+1. Crea una base de datos llamada instituto con utf8mb4_unicode_ci.
+2. Modifica la base de datos instituto para cambiar su collation a utf8mb4_general_ci.
+3. Crea una tabla profesores con los siguientes campos:
+* id: UNSIGNED INT, auto incremental, clave primaria.
+* nombre: VARCHAR(100), no nulo.
+4. Crea una tabla cursos con los siguientes campos:
+* id: AUTO_INCREMENT, clave primaria.
+* nombre: VARCHAR(150), no nulo.
+* descripcion: TEXT, opcional.
+5. Crea la tabla intermedia profesores_cursos para gestionar la relación muchos a muchos entre profesores y cursos, con los campos:
+* id: AUTO_INCREMENT, clave primaria.
+* profesor_id: UNSIGNED INT, clave foránea a profesores(id).
+* curso_id: UNSIGNED INT, clave foránea a cursos(id).
+* fecha_asignacion: DATE, no nulo.
+6. Modifica la tabla profesores_cursos para agregar una columna horas_clase de tipo INT.
+7. Cambia el tamaño del campo nombre en la tabla cursos a 200 caracteres.
+8. Elimina la columna horas_clase de la tabla profesores_cursos.
+9. Añade un índice a la columna nombre en cursos para mejorar la búsqueda.
+10. Inserta un profesor llamado "Juan Pérez".
+11. Añade un curso llamado "Matemáticas" con una descripción "Curso de álgebra y geometría".
+12. Asigna el profesor "Juan Pérez" al curso "Matemáticas" con fecha de asignación de hoy.
+13. Inserta dos profesores adicionales ("Ana Rodríguez" y "Luis Gómez").
+14. Añade tres cursos adicionales ("Física", "Historia", "Química").
+15. Asigna a los profesores a distintos cursos.
+16. Consulta todos los cursos en los que imparte clases "Juan Pérez".
+17. Consulta todos los profesores que enseñan el curso "Matemáticas".
+18. Elimina la asignación de un profesor en un curso específico.
+19. Elimina un profesor y sus registros de cursos.
+20. Elimina la base de datos instituto.
