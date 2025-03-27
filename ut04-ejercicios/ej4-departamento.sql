@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS alumnos (
 -- 4. Crea una tabla asignaturas con los siguientes campos: id: AUTO_INCREMENT, clave primaria. nombre: VARCHAR(100), no nulo.
 USE universidad;
 CREATE TABLE IF NOT EXISTS asignaturas (
-	id AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL
 );
 -- 5. Crea la tabla intermedia matriculas para gestionar la relación muchos a muchos entre alumnos y asignaturas, con los campos: id: AUTO_INCREMENT, clave primaria. alumno_id: UNSIGNED INT, clave foránea a alumnos(id). asignatura_id: UNSIGNED INT, clave foránea a asignaturas(id). fecha_matricula: DATE, no nulo.
@@ -19,7 +19,7 @@ USE universidad;
 CREATE TABLE IF NOT EXISTS matriculas (
 	alumno_id INT UNSIGNED, 
     FOREIGN KEY (alumno_id) REFERENCES alumnos(id),
-	asignatura_id INT UNSIGNED,
+	asignatura_id INT,
     FOREIGN KEY (asignatura_id) REFERENCES asignaturas(id),
     fecha_matricula DATE NOT NULL
 );
@@ -30,14 +30,30 @@ ALTER TABLE matriculas ADD nota DECIMAL(4,2);
 USE universidad;
 ALTER TABLE asignaturas MODIFY nombre VARCHAR(150) NOT NULL;
 -- 8. Elimina la columna nota de la tabla matriculas.
+USE universidad;
+ALTER TABLE matriculas DROP nota;
 -- 9. Añade un índice a la columna nombre en asignaturas para mejorar la búsqueda.
 -- 10. Inserta un alumno llamado "Luis Gómez".
+USE universidad;
+INSERT INTO alumnos (nombre) VALUES ('Luis Gómez');
 -- 11. Añade una asignatura llamada "Matemáticas".
+USE universidad;
+INSERT INTO asignaturas (nombre) VALUES ('Matemáticas');
 -- 12. Matricula al alumno en Matemáticas con fecha de matrícula de hoy.
+USE universidad;
+INSERT INTO matriculas (alumno_id, asignatura_id) VALUES (1, 1);
 -- 13. Inserta dos alumnos adicionales ("María Fernández" y "Carlos Ruiz").
+USE universidad;
+INSERT INTO alumnos (nombre) VALUES ('María Fernández'), ('Carlos Ruiz');
 -- 14. Añade tres asignaturas adicionales ("Física", "Historia", "Química").
+USE universidad;
+INSERT INTO asignaturas (nombre) VALUES ('Física'), ('Historia'), ('Química');
 -- 15. Matricula a los alumnos en distintas asignaturas.
+USE universidad;
+INSERT INTO matriculas (alumno_id, asignatura_id) VALUES (2, 4), (3, 2);
 -- 16. Consulta todas las asignaturas en las que está inscrito el alumno "Luis Gómez".
+USE universidad;
+SELECT asignatura_id FROM matriculas WHERE alumno_id=1;
 -- 17. Consulta todos los alumnos que están inscritos en la asignatura "Matemáticas".
 -- 18. Elimina la inscripción de un alumno en una asignatura específica.
 -- 19. Elimina un alumno y sus matrículas asociadas.
