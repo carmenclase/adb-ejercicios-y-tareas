@@ -1,1 +1,0 @@
-ej6-alumnos.sql
