@@ -6,7 +6,9 @@ SELECT nombre, precio FROM producto;
 -- 3. Lista todas las columnas de la tabla producto.
 SELECT * FROM producto;
 -- 4. Lista el nombre de los productos, el precio en euros y el precio en dólares estadounidenses (USD).
+SELECT nombre, CONCAT(precio, "€") FROM producto;
 -- 5. Lista el nombre de los productos, el precio en euros y el precio en dólares estadounidenses (USD). Utiliza los siguientes alias para las columnas: nombre de producto, euros, dólares.
+SELECT nombre, CONCAT(precio, "€") AS euros FROM producto;
 -- 6. Lista los nombres y los precios de todos los productos de la tabla producto, convirtiendo los nombres a mayúscula.
 SELECT UPPER(nombre), precio FROM producto;
 -- 7. Lista los nombres y los precios de todos los productos de la tabla producto, convirtiendo los nombres a minúscula.
