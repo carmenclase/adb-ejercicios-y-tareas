@@ -28,7 +28,7 @@ SELECT nombre FROM fabricante ORDER BY nombre ASC;
 -- 14. Lista los nombres de los fabricantes ordenados de forma descendente.
 SELECT nombre FROM fabricante ORDER BY nombre DESC;
 -- 15. Lista los nombres de los productos ordenados en primer lugar por el nombre de forma ascendente y en segundo lugar por el precio de forma descendente.
-SELECT nombre, precio FROM producto ORDER BY precio DESC;
+SELECT nombre, precio FROM producto ORDER BY nombre, precio DESC;
 -- 16. Devuelve una lista con las 5 primeras filas de la tabla fabricante.
 SELECT * FROM fabricante LIMIT 5 OFFSET 0;
 -- 17. Devuelve una lista con 2 filas a partir de la cuarta fila de la tabla fabricante. La cuarta fila también se debe incluir en la respuesta.
