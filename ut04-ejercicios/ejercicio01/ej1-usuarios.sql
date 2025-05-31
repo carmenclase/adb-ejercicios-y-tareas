@@ -17,9 +17,7 @@ CREATE TABLE IF NOT EXISTS direcciones (
 );
 -- 5. Modificar tabla direcciones. Hacer que usuario_id sea PK y FK
 USE usuarios_db;
-ALTER TABLE direcciones MODIFY id INT UNSIGNED;
-ALTER TABLE direcciones DROP PRIMARY KEY;
-ALTER TABLE direcciones ADD PRIMARY KEY(usuario_id);
+ALTER TABLE direcciones DROP PRIMARY KEY, ADD PRIMARY KEY(usuario_id);
 -- 6. Modificar tabla usuarios. Aumentar tamaño campo nombre a 150 caracteres
 USE usuarios_db;
 ALTER TABLE usuarios MODIFY nombre VARCHAR(150) NOT NULL;
@@ -34,33 +32,31 @@ USE usuarios_db;
 ALTER TABLE usuarios DROP telefono;
 -- 10. Insertar un usuario "Juan Pérez"
 USE usuarios_db;
-INSERT INTO usuarios (nombre)
-VALUES ('Juan Pérez');
+INSERT INTO usuarios (nombre) VALUES ("Juan Pérez");
 -- 11. Insertar una direccion "Calle Mayor 123" para "Juan Pérez"
 USE usuarios_db;
-INSERT INTO direcciones (usuario_id, direccion)
-VALUES (1, "Calle Mayor 123");
+INSERT INTO direcciones (usuario_id, direccion) 
+VALUES ((SELECT id FROM usuarios WHERE nombre = "Juan Pérez"), "Calle Mayor 123");
 -- 12. Insertar dos usuarios ("Ana Gómez" y "Carlos Ruiz")
 USE usuarios_db;
-INSERT INTO usuarios (nombre)
-VALUES ("Ana Gómez"),
-	   ("Carlos Ruiz");
+INSERT INTO usuarios (nombre) VALUES ("Ana Gómez"), ("Carlos Ruiz");
 -- 13. Añade direcciones para los nuevos usuarios
 USE usuarios_db;
-INSERT INTO direcciones (usuario_id, direccion)
-VALUES (2, "Calle Menor 456"),
-       (3, "Calle Mediana 789");
+INSERT INTO direcciones (usuario_id, direccion) 
+VALUES ((SELECT id FROM usuarios WHERE nombre = "Ana Gómez"), "Calle Secundaria 456"), ((SELECT id FROM usuarios WHERE nombre = "Carlos Ruiz"), "Avenida Tercera 789");
 -- 14. Consulta todas las direcciones junto con el nombre del usuario
 USE usuarios_db;
 SELECT * FROM direcciones;
 SELECT * FROM usuarios;
--- 15. Muestra todos los usuarios que no tienen dirección registrada NO SÉ CÓMO HACER ESTO
+-- 15. Muestra todos los usuarios que no tienen dirección registrada 
+USE usuarios_db;
+SELECT u.id, u.nombre FROM usuarios u LEFT JOIN direcciones d ON u.id = d.usuario_id WHERE d.usuario_id IS NULL;
 -- 16. Actualiza la dirección de "Juan Pérez" a "Avenida Central 456"
 USE usuarios_db;
-UPDATE direcciones SET direccion = 'Avenida Central 456' WHERE usuario_id = 1;
+UPDATE direcciones SET direccion = "Avenida Central 456" WHERE usuario_id = (SELECT id FROM usuarios WHERE nombre = "Juan Pérez");
 -- 17. Elimina la dirección de "Carlos Ruiz"
 USE usuarios_db;
-DELETE FROM direcciones WHERE usuario_id = 3;
+DELETE FROM direcciones WHERE usuario_id = (SELECT id FROM usuarios WHERE nombre = "Carlos Ruiz");
 -- 18. Consulta la estructura de la tabla direcciones
 USE usuarios_db;
 DESCRIBE direcciones;

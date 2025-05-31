@@ -13,10 +13,10 @@ USE biblioteca;
 CREATE TABLE IF NOT EXISTS libros (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     biblioteca_id INT UNSIGNED,
-    FOREIGN KEY (biblioteca_id) REFERENCES bibliotecas(id) ON DELETE CASCADE,
     titulo VARCHAR(255) NOT NULL,
     autor VARCHAR(100) NOT NULL,
-    anio_publicacion YEAR NOT NULL
+    anio_publicacion YEAR NOT NULL,
+    FOREIGN KEY (biblioteca_id) REFERENCES bibliotecas(id) ON DELETE CASCADE
 );
 -- 5. Modifica la tabla libros agregando una columna genero (VARCHAR(50)).
 USE biblioteca;
@@ -35,32 +35,33 @@ USE biblioteca;
 ALTER TABLE libros MODIFY isbn CHAR(13) AFTER titulo;
 -- 10. Inserta una biblioteca llamada "Biblioteca Central".
 USE biblioteca;
-INSERT INTO bibliotecas (nombre) VALUES ('Biblioteca Central');
+INSERT INTO bibliotecas (nombre) VALUES ("Biblioteca Central");
 -- 11. Añade un libro "El Quijote" de "Miguel de Cervantes" en la Biblioteca Central.
 USE biblioteca;
-INSERT INTO libros (biblioteca_id, titulo, autor, anio_publicacion) VALUES (1, 'El Quijote', 'Miguel de Cervantes', 2000);
+INSERT INTO libros (biblioteca_id, titulo, autor, anio_publicacion) VALUES ((SELECT id FROM bibliotecas WHERE nombre = "Biblioteca Central"), "El Quijote", "Miguel de Cervantes", 2000);
 -- 12. Registra dos libros adicionales en la Biblioteca Central.
 USE biblioteca;
-INSERT INTO libros (biblioteca_id, titulo, autor, anio_publicacion) VALUES (1, 'Sherlock Holmes', 'Arthur Conan Doyle', 2000), (1, 'Miss Marple', 'Agatha Christie', 2000);
+INSERT INTO libros (biblioteca_id, titulo, autor, anio_publicacion) VALUES ((SELECT id FROM bibliotecas WHERE nombre = "Biblioteca Central"), "Sherlock Holmes", "Arthur Conan Doyle", 2000), ((SELECT id FROM bibliotecas WHERE nombre = "Biblioteca Central"), "Miss Marple", "Agatha Christie", 2000);
 -- 13. Consulta todos los libros con su biblioteca.
 USE biblioteca;
 SELECT * FROM libros;
--- 14. Muestra todas las bibliotecas sin libros registrados NO SÉ CÓMO HACER ESTO
+-- 14. Muestra todas las bibliotecas sin libros registrados
+SELECT l.titulo, l.autor, b.nombre AS biblioteca FROM libros l JOIN bibliotecas b ON l.biblioteca_id = b.id;
 -- 15. Actualiza el año de publicación de "1984" a 1950.
 USE biblioteca;
-UPDATE libros SET anio_publicacion = 1950 WHERE anio_publicacion = 2000;
+UPDATE libros SET anio_publicacion = 1950 WHERE titulo = "Sherlock Holmes";
 -- 16. Elimina un libro con id = 1.
 USE biblioteca;
 DELETE FROM libros WHERE id = 1;
 -- 17. Elimina la Biblioteca Central y todos sus libros.
 USE biblioteca;
-DELETE FROM bibliotecas WHERE nombre = 'Biblioteca Central';
+DELETE FROM bibliotecas WHERE biblioteca_id = (SELECT id FROM bibliotecas WHERE nombre = "Biblioteca Central");
 -- 18. Consulta la estructura de la tabla libros.
 USE biblioteca;
 DESCRIBE libros;
 -- 19. Elimina la tabla libros y bibliotecas.
 USE biblioteca;
-DROP TABLE libros, bibliotecas;
+DROP TABLE IF EXISTS libros, bibliotecas;
 -- 20. Elimina la base de datos biblioteca.
 USE biblioteca;
-DROP DATABASE biblioteca;
+DROP DATABASE IF EXISTS biblioteca;

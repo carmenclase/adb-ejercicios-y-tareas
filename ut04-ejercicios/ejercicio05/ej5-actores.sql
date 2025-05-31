@@ -45,28 +45,28 @@ USE cine;
 INSERT INTO peliculas (titulo, anio_estreno) VALUES ("Titanic", 1997);
 -- 12. Registra la participación de "Leonardo DiCaprio" en "Titanic" como el personaje "Jack Dawson".
 USE cine;
-INSERT INTO actores_peliculas (actor_id, pelicula_id, personaje) VALUES (1, 1, "Jack Dawson");
+INSERT INTO actores_peliculas (actor_id, pelicula_id, personaje) VALUES ((SELECT id FROM actores WHERE nombre = "Leonardo DiCaprio"), (SELECT id FROM peliculas WHERE titulo = "Titanic"), "Jack Dawson");
 -- 13. Inserta dos actores adicionales ("Kate Winslet" y "Tom Hanks").
 USE cine;
 INSERT INTO actores (nombre) VALUES ("Kate Winslet"), ("Tom Hanks");
 -- 14. Añade tres películas adicionales ("Forrest Gump", "Avatar", "Inception").
 USE cine;
-INSERT INTO peliculas (titulo) VALUES ("Forrest Gump"), ("Avatar"), ("Inception");
+INSERT INTO peliculas (titulo, anio_estreno) VALUES ("Forrest Gump", 1994), ("Avatar", 2009), ("Inception", 2010);
 -- 15. Registra la participación de actores en distintas películas.
 USE cine;
-INSERT INTO actores_peliculas (actor_id, pelicula_id, personaje) VALUES (2, 1, "Rose"), (3, 2, "Forrest Gump"), (1, 3, "Cobb"); 
+INSERT INTO actores_peliculas (actor_id, pelicula_id, personaje) VALUES ((SELECT id FROM actores WHERE nombre = "Kate Winslet"), (SELECT id FROM peliculas WHERE titulo = "Titanic"), "Rose DeWitt"), ((SELECT id FROM actores WHERE nombre = "Tom Hanks"), (SELECT id FROM peliculas WHERE titulo = "Forrest Gump"), "Forrest Gump"), ((SELECT id FROM actores WHERE nombre = "Leonardo DiCaprio"), (SELECT id FROM peliculas WHERE titulo = "Inception"), "Cobb"); 
 -- 16. Consulta todas las películas en las que ha trabajado "Leonardo DiCaprio".
 USE cine;
-SELECT pelicula_id FROM actores_peliculas WHERE actor_id = 1;
+SELECT p.titulo FROM peliculas p JOIN actores_peliculas ap ON p.id = ap.pelicula_id JOIN actores a ON ap.actor_id = a.id WHERE a.nombre = "Leonardo DiCaprio";
 -- 17. Consulta todos los actores que han participado en la película "Titanic".
 USE cine;
-SELECT actor_id FROM actores_peliculas WHERE pelicula_id = 1;
+SELECT a.nombre FROM actores a JOIN actores_peliculas ap ON a.id = ap.actor_id JOIN peliculas p ON ap.pelicula_id = p.id WHERE p.titulo = "Titanic";
 -- 18. Elimina la participación de un actor en una película específica.
 USE cine;
-DELETE FROM actores_peliculas WHERE actor_id = 3;
+DELETE FROM actores_peliculas WHERE actor_id = (SELECT id FROM actores WHERE nombre = "Leonardo DiCaprio") AND pelicula_id = (SELECT id FROM peliculas WHERE titulo = "Titanic");
 -- 19. Elimina un actor y sus registros de películas.
 USE cine;
-DELETE FROM actores WHERE id = 1;
+DELETE FROM actores WHERE nombre = "Kate Winslet";
 -- 20. Elimina la base de datos cine.
 USE cine;
 DROP DATABASE IF  EXISTS cine;

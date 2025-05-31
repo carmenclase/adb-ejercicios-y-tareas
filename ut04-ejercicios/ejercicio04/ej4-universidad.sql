@@ -38,34 +38,34 @@ USE universidad;
 CREATE INDEX indice_nombre ON asignaturas(nombre);
 -- 10. Inserta un alumno llamado "Luis Gómez".
 USE universidad;
-INSERT INTO alumnos (nombre) VALUES ('Luis Gómez');
+INSERT INTO alumnos (nombre) VALUES ("Luis Gómez");
 -- 11. Añade una asignatura llamada "Matemáticas".
 USE universidad;
-INSERT INTO asignaturas (nombre) VALUES ('Matemáticas');
+INSERT INTO asignaturas (nombre) VALUES ("Matemáticas");
 -- 12. Matricula al alumno en Matemáticas con fecha de matrícula de hoy.
 USE universidad;
-INSERT INTO matriculas (alumno_id, asignatura_id, fecha_matricula) VALUES (1, 1, CURDATE());
+INSERT INTO matriculas (alumno_id, asignatura_id, fecha_matricula) VALUES ((SELECT id FROM alumnos WHERE nombre = "Luis Gómez"), (SELECT id FROM asignaturas WHERE nombre = "Matemáticas"), CURDATE());
 -- 13. Inserta dos alumnos adicionales ("María Fernández" y "Carlos Ruiz").
 USE universidad;
-INSERT INTO alumnos (nombre) VALUES ('María Fernández'), ('Carlos Ruiz');
+INSERT INTO alumnos (nombre) VALUES ("María Fernández"), ("Carlos Ruiz");
 -- 14. Añade tres asignaturas adicionales ("Física", "Historia", "Química").
 USE universidad;
-INSERT INTO asignaturas (nombre) VALUES ('Física'), ('Historia'), ('Química');
+INSERT INTO asignaturas (nombre) VALUES ("Física"), ("Historia"), ("Química");
 -- 15. Matricula a los alumnos en distintas asignaturas.
 USE universidad;
-INSERT INTO matriculas (alumno_id, asignatura_id, fecha_matricula) VALUES (1, 2, CURDATE()), (2, 4, CURDATE()), (3, 2, CURDATE());
+INSERT INTO matriculas (alumno_id, asignatura_id, fecha_matricula) VALUES ((SELECT id FROM alumnos WHERE nombre = "María Fernández"), (SELECT id FROM asignaturas WHERE nombre = "Física"), CURDATE()), ((SELECT id FROM alumnos WHERE nombre = "María Fernández"), (SELECT id FROM asignaturas WHERE nombre = "Historia"), CURDATE()), ((SELECT id FROM alumnos WHERE nombre = "Carlos Ruiz"), (SELECT id FROM asignaturas WHERE nombre = "Química"), CURDATE());
 -- 16. Consulta todas las asignaturas en las que está inscrito el alumno "Luis Gómez".
 USE universidad;
-SELECT asignatura_id FROM matriculas WHERE alumno_id = 1;
+SELECT a.nombre FROM asignaturas a JOIN matriculas m ON a.id = m.asignatura_id JOIN alumnos al ON m.alumno_id = al.id WHERE al.nombre = "Luis Gómez";
 -- 17. Consulta todos los alumnos que están inscritos en la asignatura "Matemáticas".
 USE universidad;
-SELECT alumno_id FROM matriculas WHERE asignatura_id = 1;
+SELECT al.nombre FROM alumnos al JOIN matriculas m ON al.id = m.alumno_id JOIN asignaturas a ON m.asignatura_id = a.id WHERE a.nombre = "Matemáticas";
 -- 18. Elimina la inscripción de un alumno en una asignatura específica.
 USE universidad;
-DELETE FROM matriculas WHERE alumno_id = 2;
+WHERE alumno_id = (SELECT id FROM alumnos WHERE nombre = "Luis Gómez") AND asignatura_id = (SELECT id FROM asignaturas WHERE nombre = "Matemáticas");
 -- 19. Elimina un alumno y sus matrículas asociadas.
 USE universidad;
-DELETE FROM alumnos WHERE id = 1
+DELETE FROM alumnos WHERE nombre = "Carlos Ruiz";
 -- 20. Elimina la base de datos universidad.
 USE universidad;
 DROP DATABASE IF EXISTS universidad;

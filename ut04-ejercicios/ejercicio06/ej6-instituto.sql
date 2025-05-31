@@ -1,4 +1,3 @@
-
 -- 1. Crea una base de datos llamada instituto con utf8mb4_unicode_ci.
 CREATE DATABASE IF NOT EXISTS instituto CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 -- 2. Modifica la base de datos instituto para cambiar su collation a utf8mb4_general_ci.
@@ -14,7 +13,7 @@ USE instituto;
 CREATE TABLE IF NOT EXISTS cursos (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(150) NOT NULL,
-    descripcion TEXT NULL
+    descripcion TEXT
 );
 -- 5. Crea la tabla intermedia profesores_cursos para gestionar la relación muchos a muchos entre profesores y cursos, con los campos: id: AUTO_INCREMENT, clave primaria, profesor_id: UNSIGNED INT, clave foránea a profesores(id), curso_id: UNSIGNED INT, clave foránea a cursos(id), fecha_asignacion: DATE, no nulo.
 USE instituto;
@@ -46,7 +45,7 @@ USE instituto;
 INSERT INTO cursos (nombre, descripcion) VALUES ("Matemáticas", "Curso de álgebra y geometría");
 -- 12. Asigna el profesor "Juan Pérez" al curso "Matemáticas" con fecha de asignación de hoy.
 USE instituto;
-INSERT INTO profesores_cursos (profesor_id, curso_id, fecha_asignacion) VALUES (1, 1, CURDATE()); 
+INSERT INTO profesores_cursos (profesor_id, curso_id, fecha_asignacion) VALUES ((SELECT id FROM profesores WHERE nombre = "Juan Pérez"), (SELECT id FROM cursos WHERE nombre = "Matemáticas"), CURDATE());
 -- 13. Inserta dos profesores adicionales ("Ana Rodríguez" y "Luis Gómez").
 USE instituto;
 INSERT INTO profesores (nombre) VALUES ("Ana Rodríguez"), ("Luis Gómez");
@@ -55,19 +54,20 @@ USE instituto;
 INSERT INTO cursos (nombre) VALUES ("Física"), ("Historia"), ("Química");
 -- 15. Asigna a los profesores a distintos cursos.
 USE instituto;
-INSERT INTO profesores_cursos (profesor_id, curso_id, fecha_asignacion) VALUES (2, 3, CURDATE()), (3, 4, CURDATE()), (3, 2, CURDATE());
+INSERT INTO profesores_cursos (profesor_id, curso_id, fecha_asignacion) VALUES ((SELECT id FROM profesores WHERE nombre = "Ana Rodríguez"), (SELECT id FROM cursos WHERE nombre = "Física"), CURDATE()), ((SELECT id FROM profesores WHERE nombre = "Luis Gómez"), (SELECT id FROM cursos WHERE nombre = "Historia"), CURDATE()), ((SELECT id FROM profesores WHERE nombre = "Juan Pérez"), (SELECT id FROM cursos WHERE nombre = "Química"), CURDATE());
 -- 16. Consulta todos los cursos en los que imparte clases "Juan Pérez".
 USE instituto;
-SELECT curso_id FROM profesores_cursos WHERE profesor_id = 1; 
+SELECT c.nombre FROM cursos c JOIN profesores_cursos pc ON c.id = pc.curso_id
+JOIN profesores p ON pc.profesor_id = p.id WHERE p.nombre = "Juan Pérez";
 -- 17. Consulta todos los profesores que enseñan el curso "Matemáticas".
 USE instituto;
-SELECT profesor_id FROM profesores_cursos WHERE curso_id = 1;
+SELECT p.nombre FROM profesores p JOIN profesores_cursos pc ON p.id = pc.profesor_id JOIN cursos c ON pc.curso_id = c.id WHERE c.nombre = "Matemáticas";
 -- 18. Elimina la asignación de un profesor en un curso específico.
 USE instituto;
-DELETE FROM profesores_cursos WHERE profesor_id = 2;
+DELETE FROM profesores_cursos WHERE profesor_id = (SELECT id FROM profesores WHERE nombre = "Juan Pérez");
 -- 19. Elimina un profesor y sus registros de cursos.
 USE instituto;
-DELETE FROM profesores WHERE profesor_id = 3;
+DELETE FROM profesores WHERE profesor_id = (SELECT id FROM profesores WHERE nombre = "Ana Rodríguez") ;
 -- 20. Elimina la base de datos instituto.
 USE instituto;
 DROP DATABASE IF EXISTS instituto;
