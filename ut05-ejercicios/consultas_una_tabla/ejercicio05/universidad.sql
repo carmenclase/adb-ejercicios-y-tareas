@@ -19,11 +19,11 @@ SELECT * FROM persona WHERE tipo = "alumno" AND ciudad != "Madrid";
 -- 10. Muestra cuántos alumnos hay en total.
 SELECT COUNT(*) FROM persona WHERE tipo = "alumno";
 -- 11. Muestra cuántas ciudades diferentes hay entre los alumnos.
-SELECT DISTINCT ciudad FROM persona WHERE tipo = "alumno";
+SELECT COUNT(DISTINCT ciudad) FROM persona WHERE tipo = "alumno";
 -- 12. Muestra los nombres y ciudades de los alumnos ordenados alfabéticamente por ciudad.
 SELECT nombre, ciudad FROM persona WHERE tipo = "alumno" ORDER BY ciudad;
 -- 13. Muestra el número de alumnos por ciudad.
-
+SELECT ciudad, COUNT(*) AS num_alumnos FROM persona WHERE tipo = "alumno" GROUP BY ciudad;
 -- 14. Muestra los alumnos cuyo nombre contenga la letra “a”.
 SELECT * FROM persona WHERE tipo = "alumno" AND nombre LIKE "%a%";
 -- 15. Muestra los alumnos cuya ciudad tenga exactamente 5 caracteres.
@@ -31,17 +31,17 @@ SELECT * FROM persona WHERE tipo = "alumno" AND ciudad LIKE "_____";
 -- 16. Lista el nombre de todos los profesores.
 SELECT nombre FROM persona WHERE tipo = "profesor";
 -- 17. Muestra los profesores que pertenecen al departamento 1.
-SELECT * FROM persona, departamento WHERE tipo = "profesor" AND departamento.id = 1;
+SELECT p.*, d.nombre AS nombre_departamento FROM profesor p JOIN departamento d ON p.id_departamento = d.id WHERE d.id = 1;
 -- 18. Muestra los profesores cuyo nombre empiece por “M”.
 SELECT nombre FROM persona WHERE tipo = "profesor" AND nombre LIKE "M%";
 -- 19. Muestra cuántos profesores hay por cada departamento.
-
+SELECT id_departamento, COUNT(*) AS num_profesores FROM profesor GROUP BY id_departamento;
 -- 20. Muestra el nombre del profesor que tiene el código más alto.
 SELECT nombre FROM persona WHERE tipo = "profesor" ORDER BY persona.id DESC LIMIT 1;
 -- 21. Muestra cuántos profesores hay en total.
 SELECT COUNT(*) FROM profesor;
 -- 22. Muestra los códigos de departamento distintos de los profesores.
-
+SELECT DISTINCT id_departamento FROM profesor;
 -- 23. Muestra el nombre de todas las asignaturas de 1er curso.
 SELECT nombre FROM asignatura WHERE curso = 1;
 -- 24. Muestra las asignaturas del primer cuatrimestre.
@@ -49,7 +49,7 @@ SELECT * FROM asignatura WHERE cuatrimestre = 1;
 -- 25. Muestra las asignaturas que tengan más de 6 créditos.
 SELECT * FROM asignatura WHERE creditos > 6;
 -- 26. Muestra cuántas asignaturas hay por cada curso.
-
+SELECT curso, COUNT(*) AS num_asignaturas FROM asignatura GROUP BY curso;
 -- 27. Muestra las asignaturas ordenadas por número de créditos (descendente).
 SELECT * FROM asignatura ORDER BY creditos DESC;
 -- 28. Muestra los nombres de asignaturas que tengan la palabra "Programación".
@@ -57,3 +57,4 @@ SELECT nombre FROM asignatura WHERE nombre LIKE "%Programación%";
 -- 29. Muestra cuántas asignaturas hay en total.
 SELECT COUNT(*) FROM asignatura;
 -- 30. Muestra cuántas matrículas hay registradas.
+SELECT COUNT(*) AS total_matriculas FROM alumno_se_matricula_asignatura;

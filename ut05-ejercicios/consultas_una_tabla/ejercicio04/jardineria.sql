@@ -3,11 +3,11 @@ SELECT codigo_oficina, ciudad FROM oficina;
 -- 2. Devuelve un listado con la ciudad y el teléfono de las oficinas de España.
 SELECT ciudad, telefono FROM oficina WHERE pais = "España";
 -- 3. Devuelve un listado con el nombre, apellidos y email de los empleados cuyo jefe tiene un código de jefe igual a 7.
-SELECT nombre, CONCAT(apellido1, "", apellido2) AS apellidos, email FROM empleado WHERE codigo_jefe = 7;
+SELECT nombre, CONCAT(apellido1, " ", apellido2) AS apellidos, email FROM empleado WHERE codigo_jefe = 7;
 -- 4. Devuelve el nombre del puesto, nombre, apellidos y email del jefe de la empresa.
-SELECT puesto, nombre, CONCAT(apellido1, "", apellido2) AS apellidos, email FROM empleado WHERE puesto = "Director General";
+SELECT puesto, nombre, CONCAT(apellido1, " ", apellido2) AS apellidos, email FROM empleado WHERE puesto = "Director General";
 -- 5. Devuelve un listado con el nombre, apellidos y puesto de aquellos empleados que no sean representantes de ventas.
-SELECT nombre, CONCAT(apellido1, "", apellido2) AS apellidos, puesto FROM empleado WHERE puesto != "Representante Ventas";
+SELECT nombre, CONCAT(apellido1, " ", apellido2) AS apellidos, puesto FROM empleado WHERE puesto != "Representante Ventas";
 -- 6. Devuelve un listado con el nombre de los todos los clientes españoles.
 SELECT nombre_cliente FROM cliente WHERE pais = "Spain";
 -- 7. Devuelve un listado con los distintos estados por los que puede pasar un pedido.
@@ -39,4 +39,4 @@ SELECT DISTINCT forma_pago FROM pago;
 -- 15. Devuelve un listado con todos los productos que pertenecen a la gama Ornamentales y que tienen más de 100 unidades en stock. El listado deberá estar ordenado por su precio de venta, mostrando en primer lugar los de mayor precio.
 SELECT * FROM producto WHERE gama = "Ornamentales" AND cantidad_en_stock > 100 ORDER BY precio_venta DESC;
 -- 16. Devuelve un listado con todos los clientes que sean de la ciudad de Madrid y cuyo representante de ventas tenga el código de empleado 11 o 30.
-SELECT * FROM cliente WHERE ciudad = "Madrid" AND codigo_empleado_rep_ventas = 11 OR codigo_empleado_rep_ventas = 30;
+SELECT * FROM cliente WHERE ciudad = "Madrid" AND (codigo_empleado_rep_ventas = 11 OR codigo_empleado_rep_ventas = 30);

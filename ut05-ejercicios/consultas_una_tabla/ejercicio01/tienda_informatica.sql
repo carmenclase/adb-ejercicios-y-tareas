@@ -6,9 +6,9 @@ SELECT nombre, precio FROM producto;
 -- 3. Lista todas las columnas de la tabla producto.
 SELECT * FROM producto;
 -- 4. Lista el nombre de los productos, el precio en euros y el precio en dólares estadounidenses (USD).
-SELECT nombre, CONCAT(precio, "€") FROM producto;
+SELECT nombre, CONCAT(precio, "€"), precio * 1.14 FROM producto;
 -- 5. Lista el nombre de los productos, el precio en euros y el precio en dólares estadounidenses (USD). Utiliza los siguientes alias para las columnas: nombre de producto, euros, dólares.
-SELECT nombre, CONCAT(precio, "€") AS euros FROM producto;
+SELECT nombre, CONCAT(precio, "€") AS euros, precio * 1.14 AS dolares FROM producto;
 -- 6. Lista los nombres y los precios de todos los productos de la tabla producto, convirtiendo los nombres a mayúscula.
 SELECT UPPER(nombre), precio FROM producto;
 -- 7. Lista los nombres y los precios de todos los productos de la tabla producto, convirtiendo los nombres a minúscula.
@@ -22,7 +22,7 @@ SELECT nombre, TRUNCATE(precio, 0) AS precio_truncate FROM producto;
 -- 11. Lista el identificador de los fabricantes que tienen productos en la tabla producto.
 SELECT id_fabricante FROM producto;
 -- 12. Lista el identificador de los fabricantes que tienen productos en la tabla producto, eliminando los identificadores que aparecen repetidos.
-SELECT id_fabricante FROM producto;
+SELECT DISTINCT id_fabricante FROM producto;
 -- 13. Lista los nombres de los fabricantes ordenados de forma ascendente.
 SELECT nombre FROM fabricante ORDER BY nombre ASC;
 -- 14. Lista los nombres de los fabricantes ordenados de forma descendente.
